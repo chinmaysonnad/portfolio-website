@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chinmay S Sonnad | CS Engineering Student & Web Developer</title>
+  <meta name="description" content="Personal Portfolio of Chinmay S Sonnad - 3rd Year BE Computer Science & Engineering Student at KLS GIT Belagavi. Web Developer with Python, Django, Node.js & Cybersecurity interest." />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  
+  <!-- Feather Icons CDN -->
+  <script src="https://unpkg.com/feather-icons"></script>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Ambient Animated Background Purple Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- Header Navigation -->
+  <header class="header">
+    <nav class="nav-bar container">
+      <a href="#hero" class="nav-brand">
+        <i data-feather="terminal" style="color: var(--accent-cyan);"></i>
+        <span>Chinmay</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#certificates" class="nav-link">Certificates</a></li>
+        <li><a href="#terminal" class="nav-link">CLI Terminal</a></li>
+        <li><a href="#experience" class="nav-link">Education</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="theme-toggle-btn" class="btn-icon" title="Change Visual Theme">
+          <i data-feather="sun"></i>
+        </button>
+        <a href="#contact" class="btn-primary">
+          <span>Get In Touch</span>
+          <i data-feather="send"></i>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-status">
+            <span class="status-dot"></span>
+            <span id="hero-status-text">Seeking Internships & Cybersecurity Roles</span>
+          </div>
+
+          <h1 class="hero-title">
+            Hi, I'm <span id="hero-name">Chinmay S Sonnad</span><br />
+            <span id="typewriter-role" class="typewriter-text"></span>
+          </h1>
+
+          <p id="hero-tagline" class="hero-description">
+            Computer Science student at KLS GIT Belagavi, building web applications with Python, Django, Node.js & exploring Cybersecurity.
+          </p>
+
+          <div class="hero-cta">
+            <a href="#projects" class="btn-primary">
+              <span>View Projects</span>
+              <i data-feather="arrow-right"></i>
+            </a>
+            <a href="https://wa.me/919916031967" target="_blank" class="btn-secondary">
+              <span>Connect on WhatsApp</span>
+              <i data-feather="message-circle"></i>
+            </a>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="metric-card">
+              <h4>3rd Year</h4>
+              <p>BE CSE Undergraduate</p>
+            </div>
+            <div class="metric-card">
+              <h4>2028</h4>
+              <p>Graduation Year</p>
+            </div>
+            <div class="metric-card">
+              <h4>KLS GIT</h4>
+              <p>Belagavi, India</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Profile Badge Showcase Card -->
+        <div class="hero-visual">
+          <div class="hero-card" style="padding: 2.2rem 2rem;">
+            <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(168, 85, 247, 0.15); border: 1px solid var(--border-glow); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--accent-cyan);">
+              <i data-feather="user" style="width: 36px; height: 36px;"></i>
+            </div>
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+              <h3 style="font-size: 1.35rem; font-weight: 800; font-family: var(--font-heading); color: var(--text-main); margin-bottom: 0.25rem;">Chinmay S Sonnad</h3>
+              <p style="font-size: 0.9rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 0.4rem;">CS Engineering Student & Web Developer</p>
+              <p style="font-size: 0.82rem; color: var(--text-muted);"><i data-feather="map-pin" style="width: 12px; height: 12px; vertical-align: middle;"></i> Belagavi, Karnataka, India</p>
+            </div>
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glow); border-radius: var(--radius-md); padding: 1rem; text-align: center;">
+              <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                "Always ready to learn new things, build better software, and explore cybersecurity."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About & Skills Section -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">About Me</span>
+          <h2 class="section-title">Background & <span>Bio</span></h2>
+          <p class="section-subtitle">
+            I am a 20-year-old Computer Science & Engineering student at KLS Gogte Institute of Technology, Belagavi. I am passionate about web development, cybersecurity, sports, and participating in campus activities.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Matrix Section -->
+    <section id="skills" class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Technical Skills</span>
+          <h2 class="section-title">Technologies & <span>Tools</span></h2>
+          <p class="section-subtitle">Languages, web frameworks, and core technical competencies.</p>
+        </div>
+
+        <!-- Tech Stack Brand Logo Cards -->
+        <div id="flashcard-skills-grid" class="skill-brand-grid">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" class="skill-brand-card" title="Open HTML5 Official Documentation">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5 Logo" style="width: 26px; height: 26px; object-fit: contain;" />
+            <h4>HTML5</h4>
+            <p>Web Structure</p>
+          </a>
+
+          <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" class="skill-brand-card" title="Open CSS3 Official Documentation">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3 Logo" style="width: 26px; height: 26px; object-fit: contain;" />
+            <h4>CSS3</h4>
+            <p>Responsive UI</p>
+          </a>
+
+          <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" class="skill-brand-card" title="Open JavaScript Official Documentation">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript Logo" style="width: 26px; height: 26px; object-fit: contain;" />
+            <h4>JavaScript</h4>
+            <p>Client ES6+</p>
+          </a>
+
+          <a href="https://www.python.org/" target="_blank" class="skill-brand-card" title="Open Python Official Documentation">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python Logo" style="width: 26px; height: 26px; object-fit: contain;" />
+            <h4>Python</h4>
+            <p>Backend Logic</p>
+          </a>
+
+          <a href="https://www.djangoproject.com/" target="_blank" class="skill-brand-card" title="Open Django Official Documentation">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django Logo" style="width: 26px; height: 26px; object-fit: contain;" />
+            <h4>Django</h4>
+            <p>Web Framework</p>
+          </a>
+
+          <a href="https://nodejs.org/" target="_blank" class="skill-brand-card" title="Open Node.js Official Documentation">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js Logo" style="width: 26px; height: 26px; object-fit: contain;" />
+            <h4>Node.js</h4>
+            <p>Async Runtime</p>
+          </a>
+
+          <a href="https://en.cppreference.com/w/c" target="_blank" class="skill-brand-card" title="Open C Official Documentation">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C Logo" style="width: 26px; height: 26px; object-fit: contain;" />
+            <h4>C</h4>
+            <p>System Logic</p>
+          </a>
+
+          <a href="https://isocpp.org/" target="_blank" class="skill-brand-card" title="Open C++ Official Documentation">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++ Logo" style="width: 26px; height: 26px; object-fit: contain;" />
+            <h4>C++</h4>
+            <p>OOP & DSA</p>
+          </a>
+
+          <a href="https://www.php.net/" target="_blank" class="skill-brand-card" title="Open PHP Official Documentation">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP Logo" style="width: 26px; height: 26px; object-fit: contain;" />
+            <h4>PHP</h4>
+            <p>Server Scripts</p>
+          </a>
+
+          <a href="https://git-scm.com/" target="_blank" class="skill-brand-card" title="Open Git Official Documentation">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git Logo" style="width: 26px; height: 26px; object-fit: contain;" />
+            <h4>Git</h4>
+            <p>Version Control</p>
+          </a>
+
+          <a href="https://github.com/" target="_blank" class="skill-brand-card" title="Open GitHub Website">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub Logo" style="width: 26px; height: 26px; object-fit: contain; filter: invert(1);" />
+            <h4>GitHub</h4>
+            <p>Code Hosting</p>
+          </a>
+        </div>
+
+        <div id="skills-grid" class="skills-grid">
+          <!-- Rendered dynamically via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Portfolio Showcase</span>
+          <h2 class="section-title">Featured <span>Projects</span></h2>
+          <p class="section-subtitle">Practical applications built during my Computer Science coursework & personal learning.</p>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="projects-filter-bar">
+          <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="all">All Work</button>
+            <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+            <button class="filter-btn" data-filter="ai">Cybersecurity</button>
+            <button class="filter-btn" data-filter="web">Backend API</button>
+          </div>
+
+          <div class="project-search-box">
+            <i data-feather="search" class="search-icon"></i>
+            <input type="text" id="project-search" placeholder="Search by tech or title..." />
+          </div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div id="projects-grid" class="projects-grid">
+          <!-- Rendered dynamically via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">B.E. Computer Science Credentials</span>
+          <h2 class="section-title">Certificates & <span>Credentials (B.E. CSE)</span></h2>
+          <p class="section-subtitle">Official certificates, hackathon honors, and technical competition awards achieved during B.E. Computer Science & Engineering at KLS GIT.</p>
+        </div>
+
+        <!-- Certificates Grid -->
+        <div id="certificates-grid" class="projects-grid">
+          <!-- TCS TechBytes Regional Tech Quiz (2nd Place Winner) Certificate Card -->
+          <article class="project-card animate-on-scroll">
+            <div class="project-img-wrapper" style="background: #0c0517; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;" onclick="openCertModal('cert-tcs-techbytes')">
+              <img src="assets/images/techbytes.jpeg" alt="TCS TechBytes 2nd Place Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
+              <span class="project-cat-badge" style="background: rgba(56, 189, 248, 0.9); color: #fff; position: absolute; top: 12px; right: 12px;">🥈 2nd Place (2026)</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">TCS TechBytes Regional Tech Quiz (2nd Place)</h3>
+              <div style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.75rem; font-weight: 600;">
+                <i data-feather="award" style="width: 14px; height: 14px; vertical-align: middle;"></i> Tata Consultancy Services (TCS) & BITES
+              </div>
+              <p class="project-desc">Second Place (2nd Winner) certificate awarded for securing 2nd Rank in the prestigious TCS TechBytes Regional Inter-College Technical Quiz Competition conducted by TCS.</p>
+              <div class="tech-tags">
+                <span class="tech-tag">2nd Place Winner</span>
+                <span class="tech-tag">TCS TechBytes</span>
+                <span class="tech-tag">Technical Quiz</span>
+                <span class="tech-tag">IT & CS Fundamentals</span>
+                <span class="tech-tag">Regional Competition</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn" onclick="openCertModal('cert-tcs-techbytes')">
+                  <span>View Credential</span> <i data-feather="external-link"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Avalanche 2025 Hackathon Certificate Card -->
+          <article class="project-card animate-on-scroll">
+            <div class="project-img-wrapper" style="background: #0c0517; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;" onclick="openCertModal('cert-avalanche-hackathon-2025')">
+              <img src="assets/images/avalanche hackthaon 2025.jpeg" alt="Avalanche 2025 Hackathon Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
+              <span class="project-cat-badge" style="background: rgba(168, 85, 247, 0.9); color: #fff; position: absolute; top: 12px; right: 12px;">2025</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Avalanche 2025 Hackathon</h3>
+              <div style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.75rem; font-weight: 600;">
+                <i data-feather="award" style="width: 14px; height: 14px; vertical-align: middle;"></i> KLS Gogte Institute of Technology, Belagavi
+              </div>
+              <p class="project-desc">Certificate of Participation awarded for competing in the Avalanche 2025 Hackathon, developing technical solutions and software prototypes under time constraints.</p>
+              <div class="tech-tags">
+                <span class="tech-tag">Hackathon</span>
+                <span class="tech-tag">Web Development</span>
+                <span class="tech-tag">Rapid Prototyping</span>
+                <span class="tech-tag">KLS GIT</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn" onclick="openCertModal('cert-avalanche-hackathon-2025')">
+                  <span>View Credential</span> <i data-feather="external-link"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Secret Signal Tech Treasure Hunt (1st Place Winner) Certificate Card -->
+          <article class="project-card animate-on-scroll">
+            <div class="project-img-wrapper" style="background: #0c0517; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;" onclick="openCertModal('cert-secret-signal')">
+              <img src="assets/images/secret signal.jpeg" alt="Secret Signal 1st Place Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
+              <span class="project-cat-badge" style="background: rgba(34, 197, 94, 0.9); color: #fff; position: absolute; top: 12px; right: 12px;">🥇 1st Place (2025)</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Secret Signal Tech Treasure Hunt & Quiz (1st Place)</h3>
+              <div style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.75rem; font-weight: 600;">
+                <i data-feather="award" style="width: 14px; height: 14px; vertical-align: middle;"></i> Avalanche 2025 Techfest - KLS GIT
+              </div>
+              <p class="project-desc">First Place (1st Winner) certificate awarded for securing 1st rank in the 'Secret Signal' Tech Treasure Hunt & Technical Quiz Competition at Avalanche 2025 Techfest.</p>
+              <div class="tech-tags">
+                <span class="tech-tag">1st Place Winner</span>
+                <span class="tech-tag">Tech Treasure Hunt</span>
+                <span class="tech-tag">Technical Quiz</span>
+                <span class="tech-tag">Logic & Security</span>
+                <span class="tech-tag">KLS GIT</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn" onclick="openCertModal('cert-secret-signal')">
+                  <span>View Credential</span> <i data-feather="external-link"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- C++ Skill Lab 2025 Certificate Card -->
+          <article class="project-card animate-on-scroll">
+            <div class="project-img-wrapper" style="background: #0c0517; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;" onclick="openCertModal('cert-cpp-skill-lab')">
+              <img src="assets/images/skill lab c++.jpeg" alt="C++ Skill Lab 2025 Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
+              <span class="project-cat-badge" style="background: rgba(168, 85, 247, 0.9); color: #fff; position: absolute; top: 12px; right: 12px;">2025</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">C++ Skill Lab Certification 2025</h3>
+              <div style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.75rem; font-weight: 600;">
+                <i data-feather="award" style="width: 14px; height: 14px; vertical-align: middle;"></i> KLS Gogte Institute of Technology, Belagavi
+              </div>
+              <p class="project-desc">Certificate of Completion awarded for successfully participating in the C++ Skill Lab 2025 conducted by KLS GIT, demonstrating proficiency in Object-Oriented Programming and Data Structures.</p>
+              <div class="tech-tags">
+                <span class="tech-tag">C++</span>
+                <span class="tech-tag">Object-Oriented Programming</span>
+                <span class="tech-tag">Data Structures & Algorithms</span>
+                <span class="tech-tag">KLS GIT</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn" onclick="openCertModal('cert-cpp-skill-lab')">
+                  <span>View Credential</span> <i data-feather="external-link"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- IIT Madras DIR-V Symposium 2025 Certificate Card -->
+          <article class="project-card animate-on-scroll">
+            <div class="project-img-wrapper" style="background: #0c0517; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;" onclick="openCertModal('cert-iit-madras-dirv')">
+              <img src="assets/images/IIT madras.jpg" alt="Digital India RISC-V (DIR-V) Symposium 2025 Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
+              <span class="project-cat-badge" style="background: rgba(168, 85, 247, 0.9); color: #fff; position: absolute; top: 12px; right: 12px;">2025</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Digital India RISC-V (DIR-V) Symposium 2025</h3>
+              <div style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.75rem; font-weight: 600;">
+                <i data-feather="award" style="width: 14px; height: 14px; vertical-align: middle;"></i> IIT Madras & MeitY, Govt of India
+              </div>
+              <p class="project-desc">Certificate of Participation awarded for attending the Digital India RISC-V (DIR-V) Symposium 2025 organized at IIT Madras, focusing on semiconductor innovation and open hardware.</p>
+              <div class="tech-tags">
+                <span class="tech-tag">RISC-V</span>
+                <span class="tech-tag">Semiconductor Architecture</span>
+                <span class="tech-tag">IIT Madras</span>
+                <span class="tech-tag">Hardware Tech</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn" onclick="openCertModal('cert-iit-madras-dirv')">
+                  <span>View Credential</span> <i data-feather="external-link"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Avalanche 2024 Hackathon Certificate Card -->
+          <article class="project-card animate-on-scroll">
+            <div class="project-img-wrapper" style="background: #0c0517; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;" onclick="openCertModal('cert-avalanche-hackathon')">
+              <img src="assets/images/avalnche 2024 hackthaon.jpg" alt="Avalanche 2024 Hackathon Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
+              <span class="project-cat-badge" style="background: rgba(168, 85, 247, 0.9); color: #fff; position: absolute; top: 12px; right: 12px;">2024</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Avalanche 2024 Hackathon - Round 3 Finalist</h3>
+              <div style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.75rem; font-weight: 600;">
+                <i data-feather="award" style="width: 14px; height: 14px; vertical-align: middle;"></i> KLS Gogte Institute of Technology, Belagavi
+              </div>
+              <p class="project-desc">Certificate awarded for competing in the Avalanche 2024 College Hackathon and qualifying up to Round 3 in the Web Development track.</p>
+              <div class="tech-tags">
+                <span class="tech-tag">Web Development</span>
+                <span class="tech-tag">Hackathon Finalist</span>
+                <span class="tech-tag">Algorithmic Problem Solving</span>
+                <span class="tech-tag">KLS GIT</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn" onclick="openCertModal('cert-avalanche-hackathon')">
+                  <span>View Credential</span> <i data-feather="external-link"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Astronomy Exposure Camp Certificate Card -->
+          <article class="project-card animate-on-scroll">
+            <div class="project-img-wrapper" style="background: #0c0517; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;" onclick="openCertModal('cert-astronomy-camp')">
+              <img src="assets/images/Astronomy Exposure camp.jpeg" alt="Astronomy Exposure Camp Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
+              <span class="project-cat-badge" style="background: rgba(168, 85, 247, 0.9); color: #fff; position: absolute; top: 12px; right: 12px;">2024</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Astronomy Exposure Camp - Model Making</h3>
+              <div style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.75rem; font-weight: 600;">
+                <i data-feather="award" style="width: 14px; height: 14px; vertical-align: middle;"></i> Astronomy & Science Exposure Association
+              </div>
+              <p class="project-desc">Certificate awarded for participating and constructing engineering models in the Astronomy Model Making Competition during the Astronomy Exposure Camp 2024.</p>
+              <div class="tech-tags">
+                <span class="tech-tag">Astronomy</span>
+                <span class="tech-tag">Model Making</span>
+                <span class="tech-tag">Creative Engineering</span>
+                <span class="tech-tag">Science & Physics</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn" onclick="openCertModal('cert-astronomy-camp')">
+                  <span>View Credential</span> <i data-feather="external-link"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Make In GIT Certificate Card -->
+          <article class="project-card animate-on-scroll">
+            <div class="project-img-wrapper" style="background: #0c0517; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;" onclick="openCertModal('cert-make-in-git')">
+              <img src="assets/images/Make_In_GIT.jpeg" alt="Make In GIT Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
+              <span class="project-cat-badge" style="background: rgba(168, 85, 247, 0.9); color: #fff; position: absolute; top: 12px; right: 12px;">2025</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Make In GIT - Innovation of Ideas Event</h3>
+              <div style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.75rem; font-weight: 600;">
+                <i data-feather="award" style="width: 14px; height: 14px; vertical-align: middle;"></i> KLS Gogte Institute of Technology, Belagavi
+              </div>
+              <p class="project-desc">Certificate of Participation & Innovation awarded for presenting technical ideas and engineering solutions at the Make In GIT event at KLS GIT.</p>
+              <div class="tech-tags">
+                <span class="tech-tag">Innovation</span>
+                <span class="tech-tag">Idea Presentation</span>
+                <span class="tech-tag">Technical Problem Solving</span>
+                <span class="tech-tag">KLS GIT</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn" onclick="openCertModal('cert-make-in-git')">
+                  <span>View Credential</span> <i data-feather="external-link"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Student Leadership Program Certificate Card -->
+          <article class="project-card animate-on-scroll">
+            <div class="project-img-wrapper" style="background: #0c0517; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;" onclick="openCertModal('cert-student-leadership')">
+              <img src="assets/images/student leadership program.jpeg" alt="Student Leadership Program Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
+              <span class="project-cat-badge" style="background: rgba(168, 85, 247, 0.9); color: #fff; position: absolute; top: 12px; right: 12px;">2026</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Student Leadership Program</h3>
+              <div style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.75rem; font-weight: 600;">
+                <i data-feather="award" style="width: 14px; height: 14px; vertical-align: middle;"></i> IEEE Student Branch Club
+              </div>
+              <p class="project-desc">Certification awarded by IEEE Student Branch Club for outstanding student leadership, team management, and collaborative problem-solving skills.</p>
+              <div class="tech-tags">
+                <span class="tech-tag">Student Leadership</span>
+                <span class="tech-tag">Teamwork</span>
+                <span class="tech-tag">Event Management</span>
+                <span class="tech-tag">IEEE Student Branch</span>
+              </div>
+              <div class="project-actions">
+                <button class="project-link-btn" onclick="openCertModal('cert-student-leadership')">
+                  <span>View Credential</span> <i data-feather="external-link"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dev CLI Terminal Interactive Section -->
+    <section id="terminal" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">CLI Interactive Shell</span>
+          <h2 class="section-title">Chinmay's <span>Terminal</span></h2>
+          <p class="section-subtitle">Explore my profile, education, certificates, links, and contact options using terminal syntax.</p>
+        </div>
+
+        <div class="terminal-card">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <div class="terminal-title">chinmay@klsgit ~ zsh</div>
+            <div></div>
+          </div>
+
+          <div id="terminal-body" class="terminal-body">
+            <!-- Terminal history printed here -->
+          </div>
+
+          <div class="terminal-input-row" style="padding: 0 1.5rem 1rem;">
+            <span>$</span>
+            <input type="text" id="terminal-input" placeholder="Type a command (e.g. 'help', 'bio', 'certs', 'education')..." />
+          </div>
+
+          <div class="terminal-shortcuts">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Quick Commands:</span>
+            <button class="shortcut-chip" onclick="runShortcutCmd('help')">help</button>
+            <button class="shortcut-chip" onclick="runShortcutCmd('bio')">bio</button>
+            <button class="shortcut-chip" onclick="runShortcutCmd('education')">education</button>
+            <button class="shortcut-chip" onclick="runShortcutCmd('skills')">skills</button>
+            <button class="shortcut-chip" onclick="runShortcutCmd('projects')">projects</button>
+            <button class="shortcut-chip" onclick="runShortcutCmd('certs')">certs</button>
+            <button class="shortcut-chip" onclick="runShortcutCmd('links')">links</button>
+            <button class="shortcut-chip" onclick="runShortcutCmd('contact')">contact</button>
+            <button class="shortcut-chip" onclick="runShortcutCmd('clear')">clear</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Academic Timeline</span>
+          <h2 class="section-title">Education & <span>Milestones</span></h2>
+          <p class="section-subtitle">Academic journey at KLS Gogte Institute of Technology, Belagavi.</p>
+        </div>
+
+        <div id="timeline-container" class="timeline">
+          <!-- Rendered dynamically via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Connect With Me</span>
+          <h2 class="section-title">Let's <span>Connect</span></h2>
+          <p class="section-subtitle">Reach out for internship opportunities, project collaborations, or tech discussions.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info-card">
+            <h3>Contact & Social Links</h3>
+            <p style="color: var(--text-muted); font-size: 1rem;">
+              Located in Belagavi, Karnataka, India. Feel free to connect across any platform:
+            </p>
+
+            <div class="contact-socials">
+              <a href="mailto:chinmaysonnad06@gmail.com" target="_blank" class="social-row">
+                <i data-feather="mail" style="color: var(--accent-cyan)"></i>
+                <div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">EMAIL</div>
+                  <div style="font-weight: 600;">chinmaysonnad06@gmail.com</div>
+                </div>
+              </a>
+
+              <a href="https://linkedin.com/in/chinmay-sonnad-8765a0357" target="_blank" class="social-row">
+                <i data-feather="linkedin" style="color: var(--accent-cyan)"></i>
+                <div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">LINKEDIN</div>
+                  <div style="font-weight: 600;">chinmay-sonnad-8765a0357</div>
+                </div>
+              </a>
+
+              <a href="https://github.com/chinmaysonnad" target="_blank" class="social-row">
+                <i data-feather="github" style="color: var(--accent-cyan)"></i>
+                <div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">GITHUB</div>
+                  <div style="font-weight: 600;">chinmaysonnad</div>
+                </div>
+              </a>
+
+              <a href="https://leetcode.com/u/chinmay_sonnad09/" target="_blank" class="social-row">
+                <i data-feather="code" style="color: var(--accent-cyan)"></i>
+                <div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">LEETCODE</div>
+                  <div style="font-weight: 600;">chinmay_sonnad09</div>
+                </div>
+              </a>
+
+              <a href="https://www.instagram.com/chinmay_sonnad?igsh=MTRkMHN3dzVyY3ducA==" target="_blank" class="social-row">
+                <i data-feather="instagram" style="color: var(--accent-cyan)"></i>
+                <div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">INSTAGRAM</div>
+                  <div style="font-weight: 600;">@chinmay_sonnad</div>
+                </div>
+              </a>
+
+              <a href="https://wa.me/919916031967" target="_blank" class="social-row">
+                <i data-feather="message-circle" style="color: var(--accent-cyan)"></i>
+                <div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">WHATSAPP</div>
+                  <div style="font-weight: 600;">+91 9916031967</div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Interactive Contact Form -->
+          <form id="contact-form" class="contact-form">
+            <div class="form-group">
+              <label for="form-name">Your Name</label>
+              <input type="text" id="form-name" required placeholder="Enter your name..." />
+            </div>
+            <div class="form-group">
+              <label for="form-email">Your Email Address</label>
+              <input type="email" id="form-email" required placeholder="name@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="form-message">Message / Opportunity Details</label>
+              <textarea id="form-message" rows="5" required placeholder="Type your message here..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="justify-content: center; width: 100%;">
+              <span>Send Message</span>
+              <i data-feather="send"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Chinmay S Sonnad. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Modal Overlay Dialog -->
+  <div id="modal-overlay" class="modal-overlay" onclick="if(event.target === this) closeModal()">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal()">
+        <i data-feather="x"></i>
+      </button>
+      <div id="modal-body-content"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
