@@ -517,26 +517,26 @@
     }
 
     /* ==========================================================================
-       FULLSCREEN OVERLAY MENU DRAWER
+       ULTRA-PREMIUM FULLSCREEN CINEMATIC MENU DRAWER
        ========================================================================== */
     #fullscreen-menu {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100vw;
       height: 100vh;
       z-index: 99999;
-      background: rgba(6, 6, 8, 0.97);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
+      background: rgba(6, 6, 9, 0.98);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 4rem 3.5rem 3rem;
+      padding: 3rem 4rem 2.5rem;
       opacity: 0;
       pointer-events: none;
       transform: translateY(-100%);
-      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.4s ease;
+      transition: transform 0.65s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.45s ease;
+      overflow-y: auto;
     }
 
     #fullscreen-menu.open {
@@ -549,58 +549,154 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
     .menu-close-btn {
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--border-subtle);
       color: #fff;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
+      padding: 0.55rem 1.4rem;
+      border-radius: var(--radius-full);
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 0.5rem;
       cursor: pointer;
-      font-size: 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
       transition: var(--transition);
     }
 
     .menu-close-btn:hover {
       background: var(--accent-red);
       border-color: var(--accent-red);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    /* Menu Main Split Body */
+    .menu-body-split {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      align-items: center;
+      margin: 2rem 0;
     }
 
     .menu-nav-links {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 1.4rem;
+      gap: 1rem;
+    }
+
+    .menu-nav-item {
+      position: relative;
+      overflow: hidden;
     }
 
     .menu-nav-item a {
       font-family: var(--font-display);
-      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-size: clamp(2rem, 4.8vw, 3.8rem);
       font-weight: 800;
-      color: #fff;
+      color: #e4e4e7;
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: -1px;
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 1.5rem;
       transition: var(--transition);
+      padding: 0.4rem 0;
     }
 
     .menu-nav-num {
       font-family: var(--font-mono);
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--accent-red);
+      font-weight: 600;
+      opacity: 0.85;
+    }
+
+    .menu-nav-hint {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+      margin-left: auto;
+      opacity: 0;
+      transform: translateX(-15px);
+      transition: var(--transition);
     }
 
     .menu-nav-item a:hover {
+      color: #fff;
+      transform: translateX(18px);
+      text-shadow: 0 0 25px rgba(255, 51, 68, 0.6);
+    }
+
+    .menu-nav-item a:hover .menu-nav-hint {
+      opacity: 1;
+      transform: translateX(0);
       color: var(--accent-red);
-      transform: translateX(16px);
+    }
+
+    /* Right Preview HUD Panel in Menu */
+    .menu-preview-hud {
+      background: radial-gradient(circle at 50% 30%, rgba(28, 20, 28, 0.7) 0%, rgba(12, 12, 18, 0.9) 100%);
+      border: 1px solid var(--border-active);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 51, 68, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .hud-title-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-red);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hud-preview-text {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: #fff;
+      font-weight: 600;
+      line-height: 1.4;
+      min-height: 65px;
+    }
+
+    .hud-meta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.2rem;
+    }
+
+    .hud-meta-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .hud-meta-label {
+      color: var(--text-dim);
+    }
+
+    .hud-meta-val {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     .menu-footer {
@@ -608,7 +704,7 @@
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid var(--border-subtle);
-      padding-top: 2rem;
+      padding-top: 1.5rem;
       flex-wrap: wrap;
       gap: 1.5rem;
     }
@@ -1721,30 +1817,90 @@
         <span>CHINMAY SONNAD</span>
       </div>
       <button id="menu-close" class="menu-close-btn" aria-label="Close menu">
-        <i data-feather="x"></i>
+        <span>CLOSE</span>
+        <i data-feather="x" style="width: 14px; height: 14px;"></i>
       </button>
     </div>
 
-    <ul class="menu-nav-links">
-      <li class="menu-nav-item">
-        <a href="#projects"><span class="menu-nav-num">01</span> PROJECTS</a>
-      </li>
-      <li class="menu-nav-item">
-        <a href="#experience"><span class="menu-nav-num">02</span> EXPERIENCE</a>
-      </li>
-      <li class="menu-nav-item">
-        <a href="#philosophy"><span class="menu-nav-num">03</span> PHILOSOPHY</a>
-      </li>
-      <li class="menu-nav-item">
-        <a href="#certificates"><span class="menu-nav-num">04</span> CREDENTIALS</a>
-      </li>
-      <li class="menu-nav-item">
-        <a href="#skills"><span class="menu-nav-num">05</span> TECH STACK</a>
-      </li>
-      <li class="menu-nav-item">
-        <a href="#contact"><span class="menu-nav-num">06</span> CONTACT</a>
-      </li>
-    </ul>
+    <!-- Main Split Menu Body -->
+    <div class="menu-body-split">
+      <ul class="menu-nav-links">
+        <li class="menu-nav-item" data-preview-title="Selected Projects & Web Applications" data-preview-desc="Architected enterprise systems, cybersecurity audit utilities, and motion-driven web applications." data-preview-badge="FEATURED WORK [4 SYSTEMS]">
+          <a href="#projects">
+            <span class="menu-nav-num">01</span>
+            <span>PROJECTS</span>
+            <span class="menu-nav-hint">EXPLORE ➔</span>
+          </a>
+        </li>
+
+        <li class="menu-nav-item" data-preview-title="Where I've Been & Engineering Journey" data-preview-desc="Pursuing B.E. in Computer Science at KLS GIT Belagavi while competing in national hackathons and solving DSA on LeetCode." data-preview-badge="KLS GIT • 2024-2028">
+          <a href="#experience">
+            <span class="menu-nav-num">02</span>
+            <span>EXPERIENCE</span>
+            <span class="menu-nav-hint">TIMELINE ➔</span>
+          </a>
+        </li>
+
+        <li class="menu-nav-item" data-preview-title="The Philosophy & Creative Manifesto" data-preview-desc="Great software is born at the intersection of engineering precision and design intuition. Every pixel matters." data-preview-badge="MANIFESTO">
+          <a href="#philosophy">
+            <span class="menu-nav-num">03</span>
+            <span>PHILOSOPHY</span>
+            <span class="menu-nav-hint">READ ➔</span>
+          </a>
+        </li>
+
+        <li class="menu-nav-item" data-preview-title="Official Certificates & Credentials" data-preview-desc="9 verified B.E. Computer Science honors including TCS TechBytes 2nd Place, Secret Signal 1st Place, and IIT Madras DIR-V." data-preview-badge="9 VERIFIED HONORS">
+          <a href="#certificates">
+            <span class="menu-nav-num">04</span>
+            <span>CREDENTIALS</span>
+            <span class="menu-nav-hint">VERIFY ➔</span>
+          </a>
+        </li>
+
+        <li class="menu-nav-item" data-preview-title="Core Technologies & Tooling" data-preview-desc="Hands-on stack encompassing Python, Django, Node.js, C++, C, JavaScript, HTML5, CSS3, Git, and PostgreSQL." data-preview-badge="LANGUAGES & RUNTIMES">
+          <a href="#skills">
+            <span class="menu-nav-num">05</span>
+            <span>TECH STACK</span>
+            <span class="menu-nav-hint">STACK ➔</span>
+          </a>
+        </li>
+
+        <li class="menu-nav-item" data-preview-title="Get in Touch & Direct Messaging" data-preview-desc="Have an exciting project, full-stack role, or internship opportunity? Let's create something extraordinary." data-preview-badge="DIRECT INQUIRIES">
+          <a href="#contact">
+            <span class="menu-nav-num">06</span>
+            <span>CONTACT</span>
+            <span class="menu-nav-hint">LET'S TALK ➔</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Right Preview HUD Panel -->
+      <div class="menu-preview-hud">
+        <div id="menu-hud-badge" class="hud-title-badge">PORTFOLIO OVERVIEW</div>
+        <p id="menu-hud-desc" class="hud-preview-text">
+          Computer Science student & Creative Technologist crafting fast, accessible, motion-driven digital products.
+        </p>
+
+        <div class="hud-meta-list">
+          <div class="hud-meta-item">
+            <span class="hud-meta-label">Location:</span>
+            <span class="hud-meta-val">📍 Belagavi, Karnataka, India</span>
+          </div>
+
+          <div class="hud-meta-item">
+            <span class="hud-meta-label">Status:</span>
+            <span class="hud-meta-val" style="color: #22c55e;">
+              <span class="radar-dot" style="display: inline-block;"></span> Open to Internships
+            </span>
+          </div>
+
+          <div class="hud-meta-item">
+            <span class="hud-meta-label">Direct Email:</span>
+            <span class="hud-meta-val" style="font-size: 0.76rem;">chinmaysonnad06@gmail.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="menu-footer">
       <div>

@@ -363,13 +363,15 @@ function triggerCelebratoryShockwave(x, y) {
 }
 
 /* --------------------------------------------------------------------------
-   6. FULLSCREEN CINEMATIC MENU DRAWER
+   6. ULTRA-PREMIUM FULLSCREEN MENU DRAWER WITH LIVE HUD PREVIEW
    -------------------------------------------------------------------------- */
 function initFullscreenMenu() {
   const menuTrigger = document.getElementById('menu-trigger');
   const menuClose = document.getElementById('menu-close');
   const fullscreenMenu = document.getElementById('fullscreen-menu');
-  const navLinks = document.querySelectorAll('.menu-nav-item a');
+  const navItems = document.querySelectorAll('.menu-nav-item');
+  const hudBadge = document.getElementById('menu-hud-badge');
+  const hudDesc = document.getElementById('menu-hud-desc');
 
   if (!menuTrigger || !menuClose || !fullscreenMenu) return;
 
@@ -386,8 +388,21 @@ function initFullscreenMenu() {
   menuTrigger.addEventListener('click', openMenu);
   menuClose.addEventListener('click', closeMenu);
 
-  navLinks.forEach((link) => {
-    link.addEventListener('click', closeMenu);
+  navItems.forEach((item) => {
+    const link = item.querySelector('a');
+    if (link) {
+      link.addEventListener('click', closeMenu);
+    }
+
+    // Dynamic Live Preview Switcher on Hover
+    item.addEventListener('mouseenter', () => {
+      const title = item.getAttribute('data-preview-title');
+      const desc = item.getAttribute('data-preview-desc');
+      const badge = item.getAttribute('data-preview-badge');
+
+      if (hudBadge && badge) hudBadge.textContent = badge;
+      if (hudDesc && desc) hudDesc.textContent = `${title} — ${desc}`;
+    });
   });
 
   window.addEventListener('keydown', (e) => {
