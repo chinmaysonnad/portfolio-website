@@ -186,8 +186,8 @@
       box-shadow: 0 -2px 15px rgba(255, 51, 68, 0.6);
     }
 
-    /* Center Grand Velvet Tassel & Pull Medallion */
-    .curtain-center-medallion {
+    /* Center Luxury Velvet Ribbon Knot */
+    .curtain-center-knot {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -196,58 +196,124 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      cursor: grab;
-      touch-action: none;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
     }
 
-    .curtain-center-medallion:active {
-      cursor: grabbing;
-      transform: translate(-50%, -50%) scale(1.06);
+    .curtain-center-knot:hover {
+      transform: translate(-50%, -50%) scale(1.1) translateY(-4px);
     }
 
-    .curtain-ring-orb {
-      width: 86px;
-      height: 86px;
-      background: radial-gradient(circle at 35% 35%, #3a151e, #12060a 80%);
-      border: 2px solid var(--accent-red);
-      border-radius: 50%;
+    .knot-bow-assembly {
+      position: relative;
+      width: 130px;
+      height: 95px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 40px var(--accent-glow), 0 15px 35px rgba(0, 0, 0, 0.95);
+      animation: knotFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes knotFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Left and Right Ribbon Loops */
+    .knot-loop {
+      position: absolute;
+      width: 54px;
+      height: 48px;
+      background: linear-gradient(135deg, #e6193c, #99001a);
+      border: 2px solid #ff6b3d;
+      border-radius: 50% 20% 50% 50%;
+      box-shadow: 0 0 25px rgba(255, 51, 68, 0.6), inset 0 0 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    }
+
+    .knot-loop-l {
+      left: 10px;
+      transform: rotate(-25deg);
+    }
+
+    .knot-loop-r {
+      right: 10px;
+      transform: rotate(25deg) scaleX(-1);
+    }
+
+    /* Center Crystal Knot Clasp */
+    .knot-core {
       position: relative;
-      animation: ringPulse 2.4s infinite;
-    }
-
-    @keyframes ringPulse {
-      0%, 100% { box-shadow: 0 0 35px var(--accent-glow), 0 0 0 0 rgba(255, 51, 68, 0.4); }
-      50% { box-shadow: 0 0 55px rgba(255, 51, 68, 0.7), 0 0 0 14px rgba(255, 51, 68, 0); }
-    }
-
-    .curtain-drag-arrows {
+      width: 44px;
+      height: 44px;
+      background: radial-gradient(circle at 35% 35%, #ff4d61, #660012 85%);
+      border: 2px solid #fff;
+      border-radius: 12px;
+      z-index: 10;
       display: flex;
       align-items: center;
-      gap: 0.3rem;
+      justify-content: center;
+      box-shadow: 0 0 35px var(--accent-glow), 0 10px 25px rgba(0,0,0,0.8);
       color: #fff;
+      transform: rotate(45deg);
     }
 
-    .curtain-ring-label {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 1px;
-      margin-top: 2px;
+    .knot-core-icon {
+      transform: rotate(-45deg);
     }
 
-    .curtain-tassel-tail {
-      width: 4px;
-      height: 48px;
-      background: linear-gradient(180deg, var(--accent-red), transparent);
-      margin-top: -2px;
-      border-radius: 2px;
+    /* Flowing Ribbon Tails */
+    .knot-tails-container {
+      position: absolute;
+      top: 55px;
+      display: flex;
+      gap: 12px;
+      z-index: 5;
+    }
+
+    .knot-tail {
+      width: 14px;
+      height: 55px;
+      background: linear-gradient(180deg, #e6193c 0%, #880018 70%, transparent 100%);
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 4px 15px rgba(255, 51, 68, 0.4);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    }
+
+    .knot-tail-l {
+      transform: rotate(-15deg);
+    }
+
+    .knot-tail-r {
+      transform: rotate(15deg);
+    }
+
+    /* Untying animation state */
+    .curtain-center-knot.untying .knot-loop-l {
+      transform: translate(-40px, -20px) rotate(-60deg) scale(0.4);
+      opacity: 0;
+    }
+
+    .curtain-center-knot.untying .knot-loop-r {
+      transform: translate(40px, -20px) rotate(60deg) scale(0.4);
+      opacity: 0;
+    }
+
+    .curtain-center-knot.untying .knot-tail-l {
+      transform: translateY(30px) rotate(-45deg) scale(0.3);
+      opacity: 0;
+    }
+
+    .curtain-center-knot.untying .knot-tail-r {
+      transform: translateY(30px) rotate(45deg) scale(0.3);
+      opacity: 0;
+    }
+
+    .curtain-center-knot.untying .knot-core {
+      transform: rotate(180deg) scale(1.4);
+      opacity: 0;
+      filter: blur(6px);
     }
 
     /* Curtains Theatrical HUD */
@@ -1759,17 +1825,19 @@
       <div class="curtain-hem"></div>
     </div>
 
-    <!-- Center Velvet Medallion / Pull Tassel -->
-    <div id="curtain-puller" class="curtain-center-medallion" tabindex="0" role="button" aria-label="Drag or click to open curtains">
-      <div class="curtain-ring-orb">
-        <div class="curtain-drag-arrows">
-          <i data-feather="chevron-left" style="width: 20px; height: 20px;"></i>
-          <i data-feather="sparkles" style="width: 18px; height: 18px; color: #ff6b3d;"></i>
-          <i data-feather="chevron-right" style="width: 20px; height: 20px;"></i>
+    <!-- Center Luxury Velvet Ribbon Knot (Click to Untie & Auto-Draw Curtains) -->
+    <div id="curtain-knot" class="curtain-center-knot" tabindex="0" role="button" aria-label="Click knot to untie and open curtains">
+      <div class="knot-bow-assembly">
+        <div class="knot-loop knot-loop-l"></div>
+        <div class="knot-core">
+          <i data-feather="sparkles" class="knot-core-icon" style="width: 20px; height: 20px;"></i>
         </div>
-        <span class="curtain-ring-label">DRAW</span>
+        <div class="knot-loop knot-loop-r"></div>
+        <div class="knot-tails-container">
+          <div class="knot-tail knot-tail-l"></div>
+          <div class="knot-tail knot-tail-r"></div>
+        </div>
       </div>
-      <div class="curtain-tassel-tail"></div>
     </div>
 
     <!-- Theatrical Stage HUD -->
@@ -1777,10 +1845,10 @@
       <h2 class="curtain-brand-title">CHINMAY S SONNAD</h2>
       <div class="curtain-badge-pill">
         <span class="radar-dot"></span>
-        <span id="curtain-status-label">✨ DRAG OR CLICK TO OPEN CURTAINS</span>
+        <span id="curtain-status-label">✨ CLICK KNOT TO UNTIE & ENTER</span>
       </div>
       <button id="curtain-open-btn" class="curtain-open-btn">
-        <span>Enter Stage (Open Curtains) ➔</span>
+        <span>Enter Portfolio (Open Curtains) ➔</span>
       </button>
     </div>
   </div>

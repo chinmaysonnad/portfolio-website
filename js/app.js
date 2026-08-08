@@ -1,7 +1,7 @@
 /**
  * CHINMAY S SONNAD - ULTRA-MODERN JAVASCRIPT ENGINE
  * Features:
- * 1. Luxury Theater Silk Curtains Preloader & Stage Reveal (Fluid Physics)
+ * 1. Velvet Ribbon Knot Untie & Auto-Draw Silk Curtains (1-Click Theatrical Opening)
  * 2. Fullscreen Menu Drawer with Interactive Live Preview HUD
  * 3. Cyber Matrix Text Scramble / Decryption Animations
  * 4. Magnetic Button Attraction & Click Radiant Shockwaves
@@ -23,18 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* --------------------------------------------------------------------------
-   1. LUXURY THEATER SILK CURTAINS DRAG & STAGE REVEAL
+   1. VELVET RIBBON KNOT UNTIE & AUTO-DRAW SILK CURTAINS
    -------------------------------------------------------------------------- */
 function initCurtainsLoader() {
   const preloader = document.getElementById('curtain-preloader');
-  const puller = document.getElementById('curtain-puller');
+  const knot = document.getElementById('curtain-knot');
   const leftCurtain = document.getElementById('curtain-left');
   const rightCurtain = document.getElementById('curtain-right');
   const statusLabel = document.getElementById('curtain-status-label');
   const openBtn = document.getElementById('curtain-open-btn');
   const sparkCanvas = document.getElementById('curtain-sparks');
 
-  if (!preloader || !puller || !leftCurtain || !rightCurtain) return;
+  if (!preloader || !knot || !leftCurtain || !rightCurtain) return;
 
   // Stardust Sparks Canvas
   let sparkCtx = null;
@@ -45,15 +45,15 @@ function initCurtainsLoader() {
     sparkCtx = sparkCanvas.getContext('2d');
   }
 
-  function emitCurtainSparks(x, y, count = 10) {
+  function emitCurtainSparks(x, y, count = 15) {
     if (!sparkCtx) return;
     for (let i = 0; i < count; i++) {
       sparks.push({
-        x: x + (Math.random() - 0.5) * 60,
-        y: y + (Math.random() - 0.5) * 60,
-        vx: (Math.random() - 0.5) * 6,
-        vy: (Math.random() - 0.8) * 5,
-        size: Math.random() * 3 + 1.2,
+        x: x + (Math.random() - 0.5) * 50,
+        y: y + (Math.random() - 0.5) * 50,
+        vx: (Math.random() - 0.5) * 8,
+        vy: (Math.random() - 0.7) * 7,
+        size: Math.random() * 3.5 + 1.2,
         alpha: 1,
         color: Math.random() > 0.4 ? '#ff3344' : '#ffaa33',
       });
@@ -80,7 +80,7 @@ function initCurtainsLoader() {
       sparkCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
       sparkCtx.fillStyle = s.color;
       sparkCtx.globalAlpha = Math.max(0, s.alpha);
-      sparkCtx.shadowBlur = 12;
+      sparkCtx.shadowBlur = 14;
       sparkCtx.shadowColor = s.color;
       sparkCtx.fill();
     }
@@ -90,118 +90,49 @@ function initCurtainsLoader() {
   }
   animateSparks();
 
-  let isDragging = false;
-  let startX = 0;
-  let startY = 0;
-  let currentProgress = 0; // 0 to 1
-  let isOpened = false;
+  let isUntied = false;
 
-  function updateCurtainProgress(progress) {
-    currentProgress = Math.min(Math.max(progress, 0), 1);
+  function untieAndOpenCurtains() {
+    if (isUntied) return;
+    isUntied = true;
 
-    // Realistic Silk Draping & Bunching Physics
-    const peelX = currentProgress * 80; // %
-    const scaleFactor = Math.max(0.15, 1 - currentProgress * 0.7);
-
-    leftCurtain.style.transform = `translateX(-${peelX}%) scaleX(${scaleFactor})`;
-    rightCurtain.style.transform = `translateX(${peelX}%) scaleX(${scaleFactor})`;
-    puller.style.transform = `translate(-50%, -50%) scale(${1 + currentProgress * 0.15})`;
-
-    const pct = Math.round(currentProgress * 100);
+    // 1. Untie Knot Ribbon Animation
+    knot.classList.add('untying');
     if (statusLabel) {
-      statusLabel.textContent = pct === 0 ? '✨ DRAG OR CLICK TO OPEN CURTAINS' : `🎭 ${pct}% DRAWN — RELEASE TO ENTER`;
+      statusLabel.textContent = '✨ UNTYING KNOT & UNVEILING STAGE...';
     }
 
-    emitCurtainSparks(window.innerWidth / 2, window.innerHeight / 2, 3);
+    emitCurtainSparks(window.innerWidth / 2, window.innerHeight / 2, 50);
 
-    // Trigger complete opening if dragged past 35%
-    if (currentProgress > 0.35 && !isOpened) {
-      openStageCurtains();
-    }
-  }
+    // 2. Smoothly Auto-Draw Curtains Apart
+    setTimeout(() => {
+      leftCurtain.style.transition = 'transform 1.25s cubic-bezier(0.22, 1, 0.36, 1)';
+      rightCurtain.style.transition = 'transform 1.25s cubic-bezier(0.22, 1, 0.36, 1)';
 
-  function openStageCurtains() {
-    if (isOpened) return;
-    isOpened = true;
+      leftCurtain.style.transform = 'translateX(-105%) scaleX(0.08)';
+      rightCurtain.style.transform = 'translateX(105%) scaleX(0.08)';
 
-    // Fluid Theatrical Bezier Unveiling
-    leftCurtain.style.transition = 'transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)';
-    rightCurtain.style.transition = 'transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)';
-    puller.style.transition = 'opacity 0.6s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
+      emitCurtainSparks(window.innerWidth / 2, window.innerHeight / 2, 35);
+    }, 150);
 
-    leftCurtain.style.transform = 'translateX(-105%) scaleX(0.1)';
-    rightCurtain.style.transform = 'translateX(105%) scaleX(0.1)';
-    puller.style.opacity = '0';
-    puller.style.transform = 'translate(-50%, -50%) scale(1.4)';
-
-    emitCurtainSparks(window.innerWidth / 2, window.innerHeight / 2, 45);
-
+    // 3. Complete Stage Reveal & Shockwave
     setTimeout(() => {
       preloader.classList.add('opened');
       triggerCelebratoryShockwave(window.innerWidth / 2, window.innerHeight / 2);
-    }, 700);
+    }, 850);
   }
 
-  // Pointer & Gesture Handlers
-  function onPointerDown(e) {
-    if (isOpened) return;
-    isDragging = true;
-    startX = e.clientX || (e.touches && e.touches[0].clientX) || window.innerWidth / 2;
-    startY = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight / 2;
-    document.body.style.userSelect = 'none';
-  }
-
-  function onPointerMove(e) {
-    if (!isDragging || isOpened) return;
-    const clientX = e.clientX || (e.touches && e.touches[0].clientX) || startX;
-    const clientY = e.clientY || (e.touches && e.touches[0].clientY) || startY;
-
-    // Calculate drag distance either horizontally or vertically
-    const deltaX = Math.abs(clientX - startX);
-    const deltaY = Math.abs(clientY - startY);
-    const maxDrag = window.innerWidth * 0.35;
-    const progress = Math.max(deltaX, deltaY) / maxDrag;
-
-    updateCurtainProgress(progress);
-  }
-
-  function onPointerUp() {
-    if (!isDragging || isOpened) return;
-    isDragging = false;
-    document.body.style.userSelect = '';
-
-    if (currentProgress > 0.2) {
-      openStageCurtains();
-    } else {
-      // Elastic spring back
-      leftCurtain.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-      rightCurtain.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-      puller.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-
-      updateCurtainProgress(0);
-
-      setTimeout(() => {
-        leftCurtain.style.transition = '';
-        rightCurtain.style.transition = '';
-        puller.style.transition = '';
-      }, 500);
-    }
-  }
-
-  // Bind Events to Puller and Whole Stage
-  puller.addEventListener('mousedown', onPointerDown);
-  window.addEventListener('mousemove', onPointerMove);
-  window.addEventListener('mouseup', onPointerUp);
-
-  puller.addEventListener('touchstart', onPointerDown, { passive: true });
-  window.addEventListener('touchmove', onPointerMove, { passive: true });
-  window.addEventListener('touchend', onPointerUp);
-
-  // Click directly on puller or 1-Click Button
-  puller.addEventListener('click', openStageCurtains);
+  // 1-Click Handlers on Knot, Button, and Stage
+  knot.addEventListener('click', untieAndOpenCurtains);
   if (openBtn) {
-    openBtn.addEventListener('click', openStageCurtains);
+    openBtn.addEventListener('click', untieAndOpenCurtains);
   }
+
+  preloader.addEventListener('click', (e) => {
+    if (!isUntied) {
+      untieAndOpenCurtains();
+    }
+  });
 }
 
 /* --------------------------------------------------------------------------
