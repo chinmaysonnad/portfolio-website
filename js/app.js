@@ -81,9 +81,15 @@ function initBackgroundCanvas() {
   let mouseX = width / 2;
   let mouseY = height / 2;
 
+  const aura = document.getElementById('ambient-aura');
+
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
+    if (aura) {
+      aura.style.left = `${e.clientX}px`;
+      aura.style.top = `${e.clientY}px`;
+    }
   });
 
   function animate() {
