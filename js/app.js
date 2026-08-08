@@ -477,26 +477,73 @@ function showToast(message) {
 }
 
 /* --------------------------------------------------------------------------
-   10. CONTACT FORM HANDLER
+   10. REAL ASYNC EMAIL DELIVERY & DISPATCH (Direct to chinmaysonnad06@gmail.com)
    -------------------------------------------------------------------------- */
 function initContactForm() {
   const form = document.getElementById('portfolio-contact-form');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  const submitBtn = form.querySelector('.btn-send-message');
+  const originalBtnContent = submitBtn ? submitBtn.innerHTML : 'Send Message';
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('form-name').value.trim();
     const email = document.getElementById('form-email').value.trim();
     const message = document.getElementById('form-message').value.trim();
 
     if (!name || !email || !message) {
-      showToast('⚠️ Please fill in all fields before sending.');
+      showToast('⚠️ Please complete all fields before sending.');
       return;
     }
 
-    showToast(`✨ Thanks ${name}! Your message has been sent successfully.`);
-    form.reset();
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Delivering Message...</span> ⏳';
+    }
+
+    try {
+      // Direct AJAX delivery to chinmaysonnad06@gmail.com via FormSubmit API
+      const response = await fetch('https://formsubmit.co/ajax/chinmaysonnad06@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          message: message,
+          _subject: `⚡ Portfolio Inquiry from ${name} (${email})`,
+        }),
+      });
+
+      if (response.ok) {
+        showToast(`✨ Message delivered! Thanks ${name}, sent to chinmaysonnad06@gmail.com.`);
+        form.reset();
+      } else {
+        // Mailto fallback if network or endpoint returns error
+        openMailClientFallback(name, email, message);
+      }
+    } catch (err) {
+      console.warn('FormSubmit AJAX fallback:', err);
+      openMailClientFallback(name, email, message);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnContent;
+      }
+    }
   });
+}
+
+function openMailClientFallback(name, email, message) {
+  const mailtoUri = `mailto:chinmaysonnad06@gmail.com?subject=${encodeURIComponent(
+    `Portfolio Inquiry from ${name}`
+  )}&body=${encodeURIComponent(`Hi Chinmay,\n\n${message}\n\nFrom: ${name} (${email})`)}`;
+
+  window.location.href = mailtoUri;
+  showToast('✓ Opening your email client to dispatch to chinmaysonnad06@gmail.com...');
 }
 
 /* --------------------------------------------------------------------------
