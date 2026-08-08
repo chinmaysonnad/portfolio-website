@@ -167,20 +167,26 @@ function initBackgroundCanvas() {
 
   let mouseX = width / 2;
   let mouseY = height / 2;
+  let auraX = width / 2;
+  let auraY = height / 2;
 
   const aura = document.getElementById('ambient-aura');
 
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    if (aura) {
-      aura.style.left = `${e.clientX}px`;
-      aura.style.top = `${e.clientY}px`;
-    }
   });
 
   function animate() {
     ctx.clearRect(0, 0, width, height);
+
+    // Liquid Smooth Aura Interpolation (Lerp)
+    auraX += (mouseX - auraX) * 0.12;
+    auraY += (mouseY - auraY) * 0.12;
+    if (aura) {
+      aura.style.left = `${auraX}px`;
+      aura.style.top = `${auraY}px`;
+    }
 
     // Render subtle crimson particles
     for (let i = 0; i < particles.length; i++) {
