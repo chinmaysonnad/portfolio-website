@@ -1,580 +1,294 @@
 /**
- * Application Engine & Interactive Logic
+ * CHINMAY S SONNAD - ULTRA-MODERN JAVASCRIPT ENGINE
+ * Inspired by Cinematic Showcase (Preloader 0->100, Canvas Aura, Bento 3D Tilt, Modal Drawer)
  */
 
-document.addEventListener("DOMContentLoaded", () => {
-  initPortfolio();
+document.addEventListener('DOMContentLoaded', () => {
+  initPreloader();
+  initBackgroundCanvas();
+  initFullscreenMenu();
+  initScrollAnimations();
+  initInteractiveCards();
+  initContactForm();
+  initEmailCopy();
+  initCertificatesRenderer();
 });
 
-function initPortfolio() {
-  renderProfileData();
-  renderFlashcards();
-  renderSkills();
-  renderProjects(PORTFOLIO_CONFIG.projects);
-  renderCertificates();
-  renderExperience();
-  initProjectFilters();
-  initInteractiveTerminal();
-  initContactForm();
-  initThemeSwitcher();
-  initScrollAnimations();
-  initFeatherIcons();
-}
+/* --------------------------------------------------------------------------
+   1. PRELOADER COUNTER (0 to 100)
+   -------------------------------------------------------------------------- */
+function initPreloader() {
+  const preloader = document.getElementById('preloader');
+  const countElem = document.getElementById('preloader-counter');
+  const barElem = document.getElementById('preloader-bar');
 
-/**
- * Render Header & Hero Profile Details from CONFIG
- */
-function renderProfileData() {
-  const p = PORTFOLIO_CONFIG.profile;
-  
-  // Hero texts
-  document.getElementById("hero-name").textContent = p.name;
-  document.getElementById("hero-tagline").textContent = p.tagline;
-  document.getElementById("hero-status-text").textContent = p.statusText;
-  document.getElementById("hero-avatar").src = p.avatar;
-  document.getElementById("hero-location").textContent = p.location;
-  document.getElementById("hero-role-badge").textContent = p.roleTitle;
+  if (!preloader || !countElem || !barElem) return;
 
-  // Metrics
-  document.getElementById("metric-years").textContent = p.yearsExperience + "+";
-  document.getElementById("metric-projects").textContent = p.completedProjects + "+";
-  document.getElementById("metric-commits").textContent = p.codeCommitsMonth + "+";
+  let current = 0;
+  const duration = 1200; // ms
+  const stepTime = 15;
+  const increment = 100 / (duration / stepTime);
 
-  // Typewriter effect
-  initTypewriter(p.roleTitle);
-}
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= 100) {
+      current = 100;
+      clearInterval(timer);
+      countElem.textContent = '100';
+      barElem.style.width = '100%';
 
-/**
- * Typewriter effect for Hero Role
- */
-function initTypewriter(text) {
-  const target = document.getElementById("typewriter-role");
-  if (!target) return;
-
-  const roles = [
-    text,
-    "AI Systems Integrator",
-    "Full-Stack Architect",
-    "Creative Tech Enthusiast"
-  ];
-  let roleIdx = 0;
-  let charIdx = 0;
-  let isDeleting = false;
-
-  function type() {
-    const currentRole = roles[roleIdx];
-    
-    if (isDeleting) {
-      target.textContent = currentRole.substring(0, charIdx - 1);
-      charIdx--;
+      setTimeout(() => {
+        preloader.classList.add('loaded');
+      }, 250);
     } else {
-      target.textContent = currentRole.substring(0, charIdx + 1);
-      charIdx++;
+      const displayVal = Math.floor(current);
+      countElem.textContent = displayVal < 10 ? `0${displayVal}` : `${displayVal}`;
+      barElem.style.width = `${displayVal}%`;
     }
+  }, stepTime);
+}
 
-    let typeSpeed = isDeleting ? 40 : 80;
+/* --------------------------------------------------------------------------
+   2. AMBIENT BACKGROUND CANVAS & MOUSE AURA
+   -------------------------------------------------------------------------- */
+function initBackgroundCanvas() {
+  const canvas = document.getElementById('bg-canvas');
+  if (!canvas) return;
 
-    if (!isDeleting && charIdx === currentRole.length) {
-      typeSpeed = 2200; // Pause at full word
-      isDeleting = true;
-    } else if (isDeleting && charIdx === 0) {
-      isDeleting = false;
-      roleIdx = (roleIdx + 1) % roles.length;
-      typeSpeed = 400;
-    }
+  const ctx = canvas.getContext('2d');
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
 
-    setTimeout(type, typeSpeed);
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  const particles = [];
+  const particleCount = 45;
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      radius: Math.random() * 1.8 + 0.5,
+      alpha: Math.random() * 0.4 + 0.1,
+    });
   }
 
-  type();
-}
+  let mouseX = width / 2;
+  let mouseY = height / 2;
 
-/**
- * Render Tech Flashcards
- */
-function renderFlashcards() {
-  const container = document.getElementById("flashcard-skills-grid");
-  if (!container || !PORTFOLIO_CONFIG.techFlashcards) return;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
 
-  container.className = "skill-brand-grid";
-  container.innerHTML = PORTFOLIO_CONFIG.techFlashcards
-    .map(
-      (card) => `
-      <a href="${card.url}" target="_blank" class="skill-brand-card" title="Open ${card.name} Official Documentation">
-        <img src="${card.logo}" alt="${card.name} Logo" loading="lazy" style="width: 26px; height: 26px; object-fit: contain;" />
-        <h4>${card.name}</h4>
-        <p>${card.description}</p>
-      </a>
-    `
-    )
-    .join("");
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
 
-  initFeatherIcons();
-}
+    // Render subtle crimson particles
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
 
-/**
- * Render Skills Matrix
- */
-function renderSkills() {
-  const container = document.getElementById("skills-grid");
-  if (!container) return;
+      if (p.x < 0) p.x = width;
+      if (p.x > width) p.x = 0;
+      if (p.y < 0) p.y = height;
+      if (p.y > height) p.y = 0;
 
-  container.innerHTML = PORTFOLIO_CONFIG.skillsCategories
-    .map(
-      (cat) => `
-      <div class="skill-category-card">
-        <div class="skill-card-header">
-          <div class="skill-icon">
-            <i data-feather="${cat.icon || 'code'}"></i>
-          </div>
-          <h3>${cat.title}</h3>
-        </div>
-        <div class="skill-list">
-          ${cat.skills
-            .map(
-              (s) => `
-            <div class="skill-item">
-              <div class="skill-info">
-                <span>${s.name}</span>
-                <span class="skill-badge">${s.badge}</span>
-              </div>
-              <div class="progress-bar-bg">
-                <div class="progress-bar-fill" style="width: ${s.level}%;"></div>
-              </div>
-            </div>
-          `
-            )
-            .join("")}
-        </div>
-      </div>
-    `
-    )
-    .join("");
-}
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(230, 25, 60, ${p.alpha})`;
+      ctx.fill();
+    }
 
-/**
- * Render Project Cards
- */
-function renderProjects(projectsList) {
-  const grid = document.getElementById("projects-grid");
-  if (!grid) return;
-
-  if (projectsList.length === 0) {
-    grid.innerHTML = `
-      <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-muted);">
-        <i data-feather="folder-off" style="width: 48px; height: 48px; margin-bottom: 1rem; color: var(--accent-cyan);"></i>
-        <h3>No projects match your filter.</h3>
-        <p>Try searching for another keyword or selecting 'All'.</p>
-      </div>
-    `;
-    initFeatherIcons();
-    return;
+    requestAnimationFrame(animate);
   }
 
-  grid.innerHTML = projectsList
-    .map(
-      (proj) => `
-      <article class="project-card">
-        <div class="project-thumb">
-          <img src="${proj.image}" alt="${proj.title}" loading="lazy" />
-          <span class="project-cat-badge">${proj.categoryName}</span>
-        </div>
-        <div class="project-content">
-          <h3 class="project-title">${proj.title}</h3>
-          <p class="project-desc">${proj.description}</p>
-          <div class="tech-tags">
-            ${proj.techStack.map((t) => `<span class="tech-tag">${t}</span>`).join("")}
-          </div>
-          <div class="project-actions">
-            <button class="project-link-btn" onclick="openProjectModal('${proj.id}')">
-              <span>View Details</span> <i data-feather="arrow-right"></i>
-            </button>
-            <div style="display: flex; gap: 0.5rem;">
-              <a href="${proj.github}" target="_blank" class="btn-icon" title="Source Code">
-                <i data-feather="github"></i>
-              </a>
-              <a href="${proj.liveDemo}" target="_blank" class="btn-icon" title="Live Preview">
-                <i data-feather="external-link"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </article>
-    `
-    )
-    .join("");
-
-  initFeatherIcons();
+  animate();
 }
 
-/**
- * Filter and Search Handlers
- */
-function initProjectFilters() {
-  const filterBtns = document.querySelectorAll(".filter-btn");
-  const searchInput = document.getElementById("project-search");
+/* --------------------------------------------------------------------------
+   3. FULLSCREEN MENU OVERLAY
+   -------------------------------------------------------------------------- */
+function initFullscreenMenu() {
+  const menuTrigger = document.getElementById('menu-trigger');
+  const menuClose = document.getElementById('menu-close');
+  const menuDrawer = document.getElementById('fullscreen-menu');
+  const menuLinks = document.querySelectorAll('.menu-nav-item a');
 
-  filterBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      filterBtns.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
+  if (!menuTrigger || !menuDrawer) return;
 
-      const category = btn.getAttribute("data-filter");
-      filterProjectsList(category, searchInput ? searchInput.value : "");
+  function openMenu() {
+    menuDrawer.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menuDrawer.classList.remove('open');
+    document.body.style.overflow = 'auto';
+  }
+
+  menuTrigger.addEventListener('click', openMenu);
+  if (menuClose) menuClose.addEventListener('click', closeMenu);
+
+  menuLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      closeMenu();
     });
   });
 
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      const activeCategory =
-        document.querySelector(".filter-btn.active")?.getAttribute("data-filter") || "all";
-      filterProjectsList(activeCategory, e.target.value);
-    });
-  }
-}
-
-function filterProjectsList(category, query) {
-  let filtered = PORTFOLIO_CONFIG.projects;
-
-  if (category !== "all") {
-    filtered = filtered.filter((p) => p.category === category);
-  }
-
-  if (query.trim() !== "") {
-    const q = query.toLowerCase();
-    filtered = filtered.filter(
-      (p) =>
-        p.title.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q) ||
-        p.techStack.some((t) => t.toLowerCase().includes(q))
-    );
-  }
-
-  renderProjects(filtered);
-}
-
-/**
- * Project Modal Viewer
- */
-window.openProjectModal = function (projectId) {
-  const proj = PORTFOLIO_CONFIG.projects.find((p) => p.id === projectId);
-  if (!proj) return;
-
-  const modalContainer = document.getElementById("modal-overlay");
-  const modalBody = document.getElementById("modal-body-content");
-
-  modalBody.innerHTML = `
-    <div style="margin-bottom: 1.5rem;">
-      <span class="section-tag">${proj.categoryName}</span>
-      <h2 style="font-family: var(--font-heading); font-size: 2.2rem; margin-top: 0.5rem;">${proj.title}</h2>
-    </div>
-    <div style="border-radius: var(--radius-md); overflow: hidden; margin-bottom: 1.5rem;">
-      <img src="${proj.image}" alt="${proj.title}" style="width: 100%; height: 320px; object-fit: cover;" />
-    </div>
-    <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem;">
-      ${proj.longDescription}
-    </p>
-
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; background: rgba(255, 255, 255, 0.04); padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
-      ${Object.entries(proj.stats || {})
-        .map(
-          ([key, val]) => `
-        <div>
-          <div style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase;">${key}</div>
-          <div style="font-size: 1.2rem; font-weight: 700; color: var(--accent-cyan);">${val}</div>
-        </div>
-      `
-        )
-        .join("")}
-    </div>
-
-    <div style="margin-bottom: 2rem;">
-      <h4 style="margin-bottom: 0.75rem;">Technologies Used</h4>
-      <div class="tech-tags">
-        ${proj.techStack.map((t) => `<span class="tech-tag" style="font-size: 0.85rem; padding: 0.35rem 0.85rem;">${t}</span>`).join("")}
-      </div>
-    </div>
-
-    <div style="display: flex; gap: 1rem;">
-      <a href="${proj.liveDemo}" target="_blank" class="btn-primary">
-        <span>Launch Live Demo</span> <i data-feather="external-link"></i>
-      </a>
-      <a href="${proj.github}" target="_blank" class="btn-secondary">
-        <span>View Source</span> <i data-feather="github"></i>
-      </a>
-    </div>
-  `;
-
-  modalContainer.classList.add("active");
-  initFeatherIcons();
-};
-
-window.closeModal = function () {
-  document.getElementById("modal-overlay").classList.remove("active");
-};
-
-/**
- * Render Experience Timeline
- */
-function renderExperience() {
-  const container = document.getElementById("timeline-container");
-  if (!container) return;
-
-  container.innerHTML = PORTFOLIO_CONFIG.experience
-    .map(
-      (exp) => `
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-card">
-          <div class="timeline-period">${exp.period}</div>
-          <h3 class="timeline-role">${exp.role}</h3>
-          <div class="timeline-company">${exp.company}</div>
-          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem;">${exp.description}</p>
-          <ul class="timeline-highlights">
-            ${exp.highlights.map((h) => `<li>${h}</li>`).join("")}
-          </ul>
-        </div>
-      </div>
-    `
-    )
-    .join("");
-}
-
-/**
- * Dev CLI Terminal Handler
- */
-function initInteractiveTerminal() {
-  const termBody = document.getElementById("terminal-body");
-  const termInput = document.getElementById("terminal-input");
-  if (!termBody || !termInput) return;
-
-  // Print welcome
-  appendTerminalLine(PORTFOLIO_CONFIG.terminal.welcomeMessage, "welcome");
-
-  termInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      const cmd = termInput.value.trim().toLowerCase();
-      if (cmd === "") return;
-
-      appendTerminalLine(`$ ${cmd}`, "input");
-      termInput.value = "";
-
-      executeCommand(cmd);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menuDrawer.classList.contains('open')) {
+      closeMenu();
     }
   });
 }
 
-window.runShortcutCmd = function (cmd) {
-  const termInput = document.getElementById("terminal-input");
-  if (termInput) {
-    termInput.value = "";
-  }
-  appendTerminalLine(`$ ${cmd}`, "input");
-  executeCommand(cmd);
-};
+/* --------------------------------------------------------------------------
+   4. SCROLL-TRIGGERED REVEAL ANIMATIONS
+   -------------------------------------------------------------------------- */
+function initScrollAnimations() {
+  const revealElements = document.querySelectorAll('.fade-in-up');
 
-function executeCommand(cmd) {
-  const cleanCmd = cmd.trim().toLowerCase();
-  if (cleanCmd === "clear") {
-    document.getElementById("terminal-body").innerHTML = "";
-    return;
-  }
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
 
-  const output = PORTFOLIO_CONFIG.terminal.commands[cleanCmd];
-  if (output) {
-    appendTerminalLine(output, "output");
+  revealElements.forEach((el) => observer.observe(el));
+}
 
-    // Smoothly navigate to corresponding section on webpage
-    const sectionMap = {
-      bio: "about",
-      skills: "skills",
-      projects: "projects",
-      certs: "certificates",
-      certificates: "certificates",
-      education: "experience",
-      contact: "contact",
-      links: "contact"
-    };
+/* --------------------------------------------------------------------------
+   5. 3D CARD TILT & MOUSE HIGHLIGHT
+   -------------------------------------------------------------------------- */
+function initInteractiveCards() {
+  const cards = document.querySelectorAll('.bento-card, .cert-card, .philosophy-card');
 
-    const targetId = sectionMap[cleanCmd];
-    if (targetId) {
-      const targetElem = document.getElementById(targetId);
-      if (targetElem) {
-        const offsetTop = targetElem.getBoundingClientRect().top + window.pageYOffset - 90;
-        window.scrollTo({
-          top: Math.max(0, offsetTop),
-          behavior: "smooth"
-        });
-      }
-    }
-  } else {
-    appendTerminalLine(
-      `Command not found: '${cleanCmd}'. Type 'help' to see valid options.`,
-      "error"
-    );
+  cards.forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -4;
+      const rotateY = ((x - centerX) / centerX) * 4;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`;
+    });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   6. DYNAMIC CERTIFICATES & MODAL VIEWER
+   -------------------------------------------------------------------------- */
+function initCertificatesRenderer() {
+  if (typeof feather !== 'undefined') {
+    feather.replace();
   }
 }
 
-function appendTerminalLine(text, type = "output") {
-  const termBody = document.getElementById("terminal-body");
-  const line = document.createElement("div");
-  line.className = `terminal-line ${type}`;
-  line.textContent = text;
-  termBody.appendChild(line);
-  termBody.scrollTop = termBody.scrollHeight;
+function openCertModal(certId) {
+  const modal = document.getElementById('cert-modal');
+  const modalImg = document.getElementById('cert-modal-img');
+  const modalTitle = document.getElementById('cert-modal-title');
+  const modalIssuer = document.getElementById('cert-modal-issuer');
+  const modalDesc = document.getElementById('cert-modal-desc');
+  const modalTags = document.getElementById('cert-modal-tags');
+
+  if (!modal || typeof PORTFOLIO_CONFIG === 'undefined') return;
+
+  const cert = PORTFOLIO_CONFIG.certificates.find((c) => c.id === certId);
+  if (!cert) return;
+
+  modalImg.src = cert.image;
+  modalImg.alt = cert.title;
+  modalTitle.textContent = cert.title;
+  modalIssuer.textContent = `${cert.issuer} • (${cert.date})`;
+  modalDesc.textContent = cert.description;
+
+  modalTags.innerHTML = cert.skills
+    .map((skill) => `<span class="cert-tag">${skill}</span>`)
+    .join('');
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  if (typeof feather !== 'undefined') {
+    feather.replace();
+  }
 }
 
-/**
- * Contact Form Submission Simulator
- */
+function closeCertModal() {
+  const modal = document.getElementById('cert-modal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+window.openCertModal = openCertModal;
+window.closeCertModal = closeCertModal;
+
+/* --------------------------------------------------------------------------
+   7. INSTANT EMAIL COPY
+   -------------------------------------------------------------------------- */
+function initEmailCopy() {
+  const copyBtn = document.getElementById('copy-email-btn');
+  if (!copyBtn) return;
+
+  copyBtn.addEventListener('click', () => {
+    const email = 'chinmaysonnad06@gmail.com';
+    navigator.clipboard.writeText(email).then(() => {
+      showToast('📋 Email copied to clipboard: chinmaysonnad06@gmail.com');
+    });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   8. CONTACT FORM & TOAST NOTIFICATION
+   -------------------------------------------------------------------------- */
 function initContactForm() {
-  const form = document.getElementById("contact-form");
+  const form = document.getElementById('portfolio-contact-form');
   if (!form) return;
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById("form-name").value;
-    const email = document.getElementById("form-email").value;
-
-    showToast(`Thanks ${name}! Your message has been sent successfully.`);
+    const name = document.getElementById('form-name')?.value || 'Friend';
+    showToast(`🚀 Thank you, ${name}! Your message has been prepared.`);
     form.reset();
   });
 }
 
 function showToast(message) {
-  let toastBox = document.querySelector(".toast-container");
-  if (!toastBox) {
-    toastBox = document.createElement("div");
-    toastBox.className = "toast-container";
-    document.body.appendChild(toastBox);
+  let toast = document.getElementById('toast-notification');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast-notification';
+    document.body.appendChild(toast);
   }
 
-  const toast = document.createElement("div");
-  toast.className = "toast";
-  toast.innerHTML = `<i data-feather="check-circle" style="color: var(--accent-cyan)"></i> <span>${message}</span>`;
-  toastBox.appendChild(toast);
-  initFeatherIcons();
+  toast.textContent = message;
+  toast.classList.add('show');
 
   setTimeout(() => {
-    toast.remove();
-  }, 4000);
+    toast.classList.remove('show');
+  }, 3500);
 }
-
-/**
- * Theme Switcher
- */
-function initThemeSwitcher() {
-  const themeBtn = document.getElementById("theme-toggle-btn");
-  if (!themeBtn) return;
-
-  const themes = ["dark", "neon", "aurora", "light"];
-  let currentThemeIdx = 0;
-
-  themeBtn.addEventListener("click", () => {
-    currentThemeIdx = (currentThemeIdx + 1) % themes.length;
-    const nextTheme = themes[currentThemeIdx];
-    document.documentElement.setAttribute("data-theme", nextTheme);
-    showToast(`Switched theme to: ${nextTheme.toUpperCase()}`);
-  });
-}
-
-/**
- * Scroll Animations & Header State
- */
-function initScrollAnimations() {
-  const header = document.querySelector(".header");
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-      header.style.top = "0.75rem";
-    } else {
-      header.style.top = "1.5rem";
-    }
-  });
-}
-
-function initFeatherIcons() {
-  if (window.feather) {
-    window.feather.replace();
-  }
-}
-
-/**
- * Render Certificates & Credentials
- */
-function renderCertificates() {
-  const container = document.getElementById("certificates-grid");
-  if (!container || !PORTFOLIO_CONFIG.certificates) return;
-
-  container.innerHTML = PORTFOLIO_CONFIG.certificates
-    .map(
-      (cert) => `
-      <article class="project-card cert-card">
-        <div class="project-thumb" style="height: 220px; background: #0c0517; display: flex; align-items: center; justify-content: center;">
-          <img src="${cert.image}" alt="${cert.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; padding: 0.5rem;" />
-          <span class="project-cat-badge" style="background: rgba(168, 85, 247, 0.9); color: #fff;">${cert.date}</span>
-        </div>
-        <div class="project-content">
-          <div style="font-size: 0.8rem; color: var(--accent-cyan); font-family: var(--font-mono); margin-bottom: 0.4rem;">
-            ID: ${cert.credentialId}
-          </div>
-          <h3 class="project-title">${cert.title}</h3>
-          <div style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.75rem; font-weight: 600;">
-            <i data-feather="award" style="width: 14px; height: 14px; vertical-align: middle;"></i> ${cert.issuer}
-          </div>
-          <p class="project-desc">${cert.description}</p>
-          <div class="tech-tags">
-            ${cert.skills.map((s) => `<span class="tech-tag">${s}</span>`).join("")}
-          </div>
-          <div class="project-actions">
-            <button class="project-link-btn" onclick="openCertModal('${cert.id}')">
-              <span>View Credential</span> <i data-feather="external-link"></i>
-            </button>
-          </div>
-        </div>
-      </article>
-    `
-    )
-    .join("");
-
-  initFeatherIcons();
-}
-
-/**
- * Certificate Modal Viewer
- */
-window.openCertModal = function (certId) {
-  const cert = PORTFOLIO_CONFIG.certificates.find((c) => c.id === certId);
-  if (!cert) return;
-
-  const modalContainer = document.getElementById("modal-overlay");
-  const modalBody = document.getElementById("modal-body-content");
-
-  modalBody.innerHTML = `
-    <div style="margin-bottom: 1.5rem;">
-      <span class="section-tag">${cert.issuer}</span>
-      <h2 style="font-family: var(--font-heading); font-size: 2rem; margin-top: 0.5rem;">${cert.title}</h2>
-      <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-cyan); margin-top: 0.25rem;">Credential ID: ${cert.credentialId} | Issued: ${cert.date}</div>
-    </div>
-    <div style="border-radius: var(--radius-md); overflow: hidden; margin-bottom: 1.5rem; border: 1px solid var(--border-glow);">
-      <img src="${cert.image}" alt="${cert.title}" style="width: 100%; height: auto; max-height: 420px; object-fit: contain; background: #000;" />
-    </div>
-    <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem;">
-      ${cert.description}
-    </p>
-    <div style="margin-bottom: 1.5rem;">
-      <h4 style="margin-bottom: 0.5rem;">Skills & Verification</h4>
-      <div class="tech-tags">
-        ${cert.skills.map((s) => `<span class="tech-tag" style="font-size: 0.85rem; padding: 0.35rem 0.85rem;">${s}</span>`).join("")}
-      </div>
-    </div>
-    <div style="display: flex; gap: 1rem;">
-      <a href="${cert.link}" target="_blank" class="btn-primary">
-        <span>Open Certificate Image</span> <i data-feather="external-link"></i>
-      </a>
-      <button class="btn-secondary" onclick="closeModal()">Close</button>
-    </div>
-  `;
-
-  modalContainer.classList.add("active");
-  initFeatherIcons();
-};
