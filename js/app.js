@@ -1,11 +1,15 @@
 /**
  * CHINMAY S SONNAD - ULTRA-MODERN JAVASCRIPT ENGINE
- * Unique Animations: Interactive Drag-to-Unzip Zipper Loader, Sparks Canvas,
- * Text Scramble Matrix Decryption, Magnetic Attraction & 3D Tilt Physics
+ * Features:
+ * 1. Luxury Theater Silk Curtains Preloader & Stage Reveal (Fluid Physics)
+ * 2. Fullscreen Menu Drawer with Interactive Live Preview HUD
+ * 3. Cyber Matrix Text Scramble / Decryption Animations
+ * 4. Magnetic Button Attraction & Click Radiant Shockwaves
+ * 5. Real Async Email Delivery to chinmaysonnad06@gmail.com
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initZipperLoader();
+  initCurtainsLoader();
   initBackgroundCanvas();
   initFullscreenMenu();
   initScrollAnimations();
@@ -19,20 +23,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* --------------------------------------------------------------------------
-   1. UNIQUE INTERACTIVE ZIPPER DRAG-TO-UNLOCK PRELOADER
+   1. LUXURY THEATER SILK CURTAINS DRAG & STAGE REVEAL
    -------------------------------------------------------------------------- */
-function initZipperLoader() {
-  const container = document.getElementById('zipper-preloader');
-  const puller = document.getElementById('zip-puller');
-  const leftCurtain = document.getElementById('zip-curtain-left');
-  const rightCurtain = document.getElementById('zip-curtain-right');
-  const percentLabel = document.getElementById('zip-percent-label');
-  const quickBtn = document.getElementById('zip-quick-unlock-btn');
-  const sparkCanvas = document.getElementById('zip-sparks');
+function initCurtainsLoader() {
+  const preloader = document.getElementById('curtain-preloader');
+  const puller = document.getElementById('curtain-puller');
+  const leftCurtain = document.getElementById('curtain-left');
+  const rightCurtain = document.getElementById('curtain-right');
+  const statusLabel = document.getElementById('curtain-status-label');
+  const openBtn = document.getElementById('curtain-open-btn');
+  const sparkCanvas = document.getElementById('curtain-sparks');
 
-  if (!container || !puller || !leftCurtain || !rightCurtain) return;
+  if (!preloader || !puller || !leftCurtain || !rightCurtain) return;
 
-  // Setup Sparks Canvas
+  // Stardust Sparks Canvas
   let sparkCtx = null;
   const sparks = [];
   if (sparkCanvas) {
@@ -41,15 +45,15 @@ function initZipperLoader() {
     sparkCtx = sparkCanvas.getContext('2d');
   }
 
-  function emitSparks(x, y, count = 8) {
+  function emitCurtainSparks(x, y, count = 10) {
     if (!sparkCtx) return;
     for (let i = 0; i < count; i++) {
       sparks.push({
-        x: x,
-        y: y,
-        vx: (Math.random() - 0.5) * 8,
-        vy: (Math.random() - 0.8) * 6,
-        size: Math.random() * 3 + 1.5,
+        x: x + (Math.random() - 0.5) * 60,
+        y: y + (Math.random() - 0.5) * 60,
+        vx: (Math.random() - 0.5) * 6,
+        vy: (Math.random() - 0.8) * 5,
+        size: Math.random() * 3 + 1.2,
         alpha: 1,
         color: Math.random() > 0.4 ? '#ff3344' : '#ffaa33',
       });
@@ -57,15 +61,15 @@ function initZipperLoader() {
   }
 
   function animateSparks() {
-    if (!sparkCtx || container.classList.contains('unzipped')) return;
+    if (!sparkCtx || preloader.classList.contains('opened')) return;
     sparkCtx.clearRect(0, 0, sparkCanvas.width, sparkCanvas.height);
 
     for (let i = sparks.length - 1; i >= 0; i--) {
       const s = sparks[i];
       s.x += s.vx;
       s.y += s.vy;
-      s.vy += 0.2; // gravity
-      s.alpha -= 0.03;
+      s.vy += 0.15; // gentle gravity
+      s.alpha -= 0.025;
 
       if (s.alpha <= 0) {
         sparks.splice(i, 1);
@@ -76,7 +80,7 @@ function initZipperLoader() {
       sparkCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
       sparkCtx.fillStyle = s.color;
       sparkCtx.globalAlpha = Math.max(0, s.alpha);
-      sparkCtx.shadowBlur = 10;
+      sparkCtx.shadowBlur = 12;
       sparkCtx.shadowColor = s.color;
       sparkCtx.fill();
     }
@@ -87,101 +91,104 @@ function initZipperLoader() {
   animateSparks();
 
   let isDragging = false;
+  let startX = 0;
   let startY = 0;
-  let currentY = window.innerHeight * 0.15;
-  const minY = window.innerHeight * 0.08;
-  const maxY = window.innerHeight * 0.85;
-  let isCompleted = false;
+  let currentProgress = 0; // 0 to 1
+  let isOpened = false;
 
-  function updateZipperVisuals(yPos) {
-    const progress = Math.min(Math.max((yPos - minY) / (maxY - minY), 0), 1);
-    puller.style.top = `${yPos}px`;
+  function updateCurtainProgress(progress) {
+    currentProgress = Math.min(Math.max(progress, 0), 1);
 
-    // Progressive Curtain Opening Angle & Translation
-    const openDist = progress * 60; // vw
-    const rotateDeg = progress * 15; // deg
+    // Realistic Silk Draping & Bunching Physics
+    const peelX = currentProgress * 80; // %
+    const scaleFactor = Math.max(0.15, 1 - currentProgress * 0.7);
 
-    leftCurtain.style.transform = `translateX(-${openDist}vw) rotate(-${rotateDeg}deg)`;
-    rightCurtain.style.transform = `translateX(${openDist}vw) rotate(${rotateDeg}deg)`;
+    leftCurtain.style.transform = `translateX(-${peelX}%) scaleX(${scaleFactor})`;
+    rightCurtain.style.transform = `translateX(${peelX}%) scaleX(${scaleFactor})`;
+    puller.style.transform = `translate(-50%, -50%) scale(${1 + currentProgress * 0.15})`;
 
-    const displayPct = Math.round(progress * 100);
-    if (percentLabel) {
-      percentLabel.textContent = displayPct === 0 ? '⚡ DRAG DOWN OR CLICK TO UNZIP' : `${displayPct}% UNZIPPED - PULL TO UNLOCK`;
+    const pct = Math.round(currentProgress * 100);
+    if (statusLabel) {
+      statusLabel.textContent = pct === 0 ? '✨ DRAG OR CLICK TO OPEN CURTAINS' : `🎭 ${pct}% DRAWN — RELEASE TO ENTER`;
     }
 
-    emitSparks(window.innerWidth / 2, yPos, 4);
+    emitCurtainSparks(window.innerWidth / 2, window.innerHeight / 2, 3);
 
-    // Auto complete if dragged past 40%
-    if (progress > 0.4 && !isCompleted) {
-      completeUnzip();
+    // Trigger complete opening if dragged past 35%
+    if (currentProgress > 0.35 && !isOpened) {
+      openStageCurtains();
     }
   }
 
-  function completeUnzip() {
-    if (isCompleted) return;
-    isCompleted = true;
+  function openStageCurtains() {
+    if (isOpened) return;
+    isOpened = true;
 
-    // Smooth celebratory opening
-    leftCurtain.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-    rightCurtain.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-    puller.style.transition = 'top 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease';
+    // Fluid Theatrical Bezier Unveiling
+    leftCurtain.style.transition = 'transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)';
+    rightCurtain.style.transition = 'transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)';
+    puller.style.transition = 'opacity 0.6s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
 
-    puller.style.top = `${maxY}px`;
-    leftCurtain.style.transform = 'translateX(-110vw) rotate(-25deg)';
-    rightCurtain.style.transform = 'translateX(110vw) rotate(25deg)';
+    leftCurtain.style.transform = 'translateX(-105%) scaleX(0.1)';
+    rightCurtain.style.transform = 'translateX(105%) scaleX(0.1)';
     puller.style.opacity = '0';
+    puller.style.transform = 'translate(-50%, -50%) scale(1.4)';
 
-    emitSparks(window.innerWidth / 2, maxY, 40);
+    emitCurtainSparks(window.innerWidth / 2, window.innerHeight / 2, 45);
 
     setTimeout(() => {
-      container.classList.add('unzipped');
+      preloader.classList.add('opened');
       triggerCelebratoryShockwave(window.innerWidth / 2, window.innerHeight / 2);
-    }, 600);
+    }, 700);
   }
 
-  // Mouse & Touch Drag Handlers
+  // Pointer & Gesture Handlers
   function onPointerDown(e) {
-    if (isCompleted) return;
+    if (isOpened) return;
     isDragging = true;
-    startY = e.clientY || (e.touches && e.touches[0].clientY) || currentY;
+    startX = e.clientX || (e.touches && e.touches[0].clientX) || window.innerWidth / 2;
+    startY = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight / 2;
     document.body.style.userSelect = 'none';
   }
 
   function onPointerMove(e) {
-    if (!isDragging || isCompleted) return;
-    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-    if (!clientY) return;
+    if (!isDragging || isOpened) return;
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX) || startX;
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY) || startY;
 
-    currentY = Math.max(minY, Math.min(maxY, clientY));
-    updateZipperVisuals(currentY);
+    // Calculate drag distance either horizontally or vertically
+    const deltaX = Math.abs(clientX - startX);
+    const deltaY = Math.abs(clientY - startY);
+    const maxDrag = window.innerWidth * 0.35;
+    const progress = Math.max(deltaX, deltaY) / maxDrag;
+
+    updateCurtainProgress(progress);
   }
 
   function onPointerUp() {
-    if (!isDragging || isCompleted) return;
+    if (!isDragging || isOpened) return;
     isDragging = false;
     document.body.style.userSelect = '';
 
-    // If released before 40%, snap back gently or unlock if past 25%
-    const progress = (currentY - minY) / (maxY - minY);
-    if (progress > 0.25) {
-      completeUnzip();
+    if (currentProgress > 0.2) {
+      openStageCurtains();
     } else {
-      leftCurtain.style.transition = 'transform 0.4s ease';
-      rightCurtain.style.transition = 'transform 0.4s ease';
-      puller.style.transition = 'top 0.4s ease';
+      // Elastic spring back
+      leftCurtain.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+      rightCurtain.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+      puller.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
 
-      currentY = minY + 50;
-      updateZipperVisuals(currentY);
+      updateCurtainProgress(0);
 
       setTimeout(() => {
         leftCurtain.style.transition = '';
         rightCurtain.style.transition = '';
         puller.style.transition = '';
-      }, 400);
+      }, 500);
     }
   }
 
-  // Bind Events
+  // Bind Events to Puller and Whole Stage
   puller.addEventListener('mousedown', onPointerDown);
   window.addEventListener('mousemove', onPointerMove);
   window.addEventListener('mouseup', onPointerUp);
@@ -190,19 +197,10 @@ function initZipperLoader() {
   window.addEventListener('touchmove', onPointerMove, { passive: true });
   window.addEventListener('touchend', onPointerUp);
 
-  // Quick Unlock Button
-  if (quickBtn) {
-    quickBtn.addEventListener('click', () => {
-      completeUnzip();
-    });
-  }
-
-  // Click on Track to Instant Unzip
-  const track = document.querySelector('.zip-track');
-  if (track) {
-    track.addEventListener('click', (e) => {
-      completeUnzip();
-    });
+  // Click directly on puller or 1-Click Button
+  puller.addEventListener('click', openStageCurtains);
+  if (openBtn) {
+    openBtn.addEventListener('click', openStageCurtains);
   }
 }
 
@@ -289,7 +287,6 @@ function initTextScramble() {
           entry.target.dataset.scrambled = 'true';
           const originalText = entry.target.textContent.trim();
           let iteration = 0;
-          const maxIterations = 18;
 
           const interval = setInterval(() => {
             entry.target.textContent = originalText
@@ -537,7 +534,6 @@ function initContactForm() {
         showToast(`✨ Message delivered! Thanks ${name}, sent to chinmaysonnad06@gmail.com.`);
         form.reset();
       } else {
-        // Mailto fallback if network or endpoint returns error
         openMailClientFallback(name, email, message);
       }
     } catch (err) {
@@ -658,7 +654,6 @@ const certificatesData = [
 ];
 
 function initCertificatesRenderer() {
-  // Global modal handlers
   window.openCertModal = function (certId) {
     const cert = certificatesData.find((c) => c.id === certId);
     if (!cert) return;
