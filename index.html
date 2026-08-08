@@ -87,67 +87,246 @@
     }
 
     /* ==========================================================================
-       PRELOADER COUNTER (00 to 100 with red line)
+       INTERACTIVE ZIPPER DRAG-TO-UNLOCK PRELOADER
        ========================================================================== */
-    #preloader {
+    #zipper-preloader {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100vw;
       height: 100vh;
       z-index: 999999;
-      background: #060608;
+      background: transparent;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+      user-select: none;
+    }
+
+    #zipper-preloader.unzipped {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .zip-curtain {
+      position: absolute;
+      top: 0;
+      width: 50vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #07070a 0%, #121218 50%, #09090e 100%);
+      z-index: 2;
+      transition: transform 0.1s linear;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.95);
+      overflow: hidden;
+    }
+
+    .zip-left {
+      left: 0;
+      border-right: 2px solid rgba(255, 51, 68, 0.3);
+      transform-origin: top left;
+    }
+
+    .zip-right {
+      right: 0;
+      border-left: 2px solid rgba(255, 51, 68, 0.3);
+      transform-origin: top right;
+    }
+
+    /* Zipper Teeth Pattern */
+    .zip-teeth {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 18px;
+      background-image: repeating-linear-gradient(
+        0deg,
+        #2a2a38 0px,
+        #2a2a38 8px,
+        #121218 8px,
+        #121218 16px,
+        #ff3344 16px,
+        #ff3344 18px,
+        #121218 18px,
+        #121218 24px
+      );
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.8);
+    }
+
+    .zip-teeth-l {
+      right: 0;
+    }
+
+    .zip-teeth-r {
+      left: 0;
+    }
+
+    /* Center Zipper Track & Slider */
+    .zip-track {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 10;
+    }
+
+    .zip-puller {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+      cursor: grab;
+      touch-action: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.05s ease-out;
+    }
+
+    .zip-puller:active {
+      cursor: grabbing;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .zip-knob {
+      width: 74px;
+      height: 96px;
+      background: linear-gradient(145deg, #2c1218, #18080c);
+      border: 2px solid var(--accent-red);
+      border-radius: 18px;
+      box-shadow: 0 0 35px var(--accent-glow), 0 15px 35px rgba(0, 0, 0, 0.9);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    #preloader.loaded {
-      transform: translateY(-100%);
-      pointer-events: none;
-      opacity: 0;
+    .zip-knob::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 30%, rgba(255, 51, 68, 0.45), transparent 70%);
     }
 
-    .preloader-content {
+    .zip-handle-icon {
+      color: #fff;
+      margin-bottom: 4px;
+      animation: zipBounce 1.5s infinite;
+      z-index: 2;
+    }
+
+    @keyframes zipBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    .zip-knob-text {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .zip-pull-tag {
+      width: 14px;
+      height: 38px;
+      background: linear-gradient(180deg, var(--accent-red), #88001b);
+      border-radius: 4px;
+      margin-top: -6px;
+      box-shadow: 0 4px 12px rgba(255, 51, 68, 0.5);
+    }
+
+    /* Zipper HUD Information */
+    .zipper-hud {
+      position: absolute;
+      bottom: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 25;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      pointer-events: auto;
     }
 
-    .preloader-number {
+    .zip-brand-title {
       font-family: var(--font-display);
-      font-size: clamp(4rem, 14vw, 9.5rem);
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
       font-weight: 900;
       color: #fff;
-      letter-spacing: -2px;
-      line-height: 1;
-      margin-bottom: 1.25rem;
+      letter-spacing: 4px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
     }
 
-    .preloader-bar-container {
-      width: 200px;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.1);
-      margin: 0 auto 1.5rem;
-      border-radius: 2px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .preloader-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
-      box-shadow: 0 0 14px var(--accent-red);
-      transition: width 0.05s linear;
-    }
-
-    .preloader-name {
+    .zip-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(18, 18, 24, 0.9);
+      border: 1px solid var(--border-active);
+      padding: 0.45rem 1.25rem;
+      border-radius: var(--radius-full);
       font-family: var(--font-mono);
-      font-size: 0.85rem;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: var(--text-dim);
+      font-size: 0.8rem;
+      color: #fff;
+      box-shadow: 0 0 25px rgba(255, 51, 68, 0.3);
+    }
+
+    .zip-unlock-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.4rem 1.1rem;
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .zip-unlock-btn:hover {
+      background: var(--accent-red);
+      color: #fff;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    /* Dynamic Sparks Effect */
+    .zip-spark-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 15;
+    }
+
+    /* Click Shockwave Ripple */
+    .click-shockwave {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-red);
+      box-shadow: 0 0 20px var(--accent-red);
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0);
+      animation: shockwaveExpand 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      z-index: 9999999;
+    }
+
+    @keyframes shockwaveExpand {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(15); opacity: 0; }
     }
 
     /* ==========================================================================
@@ -1463,14 +1642,42 @@
 </head>
 <body>
 
-  <!-- Preloader Screen (Matching Video Counter 00 -> 100) -->
-  <div id="preloader">
-    <div class="preloader-content">
-      <div id="preloader-counter" class="preloader-number">00</div>
-      <div class="preloader-bar-container">
-        <div id="preloader-bar" class="preloader-bar"></div>
+  <!-- Interactive Zipper Drag-to-Unlock Preloader -->
+  <div id="zipper-preloader" class="zipper-container">
+    <canvas id="zip-sparks" class="zip-spark-canvas"></canvas>
+
+    <!-- Left Curtain Panel -->
+    <div id="zip-curtain-left" class="zip-curtain zip-left">
+      <div class="zip-teeth zip-teeth-l"></div>
+    </div>
+
+    <!-- Right Curtain Panel -->
+    <div id="zip-curtain-right" class="zip-curtain zip-right">
+      <div class="zip-teeth zip-teeth-r"></div>
+    </div>
+
+    <!-- Center Zipper Track -->
+    <div class="zip-track"></div>
+
+    <!-- Draggable Zipper Puller Knob -->
+    <div id="zip-puller" class="zip-puller" tabindex="0" role="slider" aria-label="Drag down to unzip portfolio">
+      <div class="zip-knob">
+        <i data-feather="chevron-down" class="zip-handle-icon" style="width: 28px; height: 28px;"></i>
+        <span class="zip-knob-text">PULL</span>
       </div>
-      <div class="preloader-name">CHINMAY S SONNAD</div>
+      <div class="zip-pull-tag"></div>
+    </div>
+
+    <!-- Zipper HUD Info & Quick Unlock -->
+    <div class="zipper-hud">
+      <h2 class="zip-brand-title">CHINMAY S SONNAD</h2>
+      <div class="zip-status-pill">
+        <span class="radar-dot"></span>
+        <span id="zip-percent-label">⚡ DRAG DOWN OR CLICK TO UNZIP</span>
+      </div>
+      <button id="zip-quick-unlock-btn" class="zip-unlock-btn">
+        <span>Quick Unlock (Instant Entry) ➔</span>
+      </button>
     </div>
   </div>
 
